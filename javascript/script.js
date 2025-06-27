@@ -52,6 +52,56 @@ let currentSongIndex = 0;
 // constructor
 let audio = new Audio();
 console.log(audio);
+loadSong(currentSongIndex); //no hoisitng
+
+const updatePlayPauseButton = (paused) => {
+  playpauseBtn.innerHTML = paused
+    ? `<img src="./assets/icons/play-button.svg"/>`
+    : `<img src="./assets/icons/pause-button.svg"/>`;
+};
+
+// to play pasue the track
+function playPause() {
+  if (audio.paused) {
+    audio.play();
+    updatePlayPauseButton(true);
+  } else {
+    audio.pause();
+    updatePlayPauseButton(false);
+  }
+}
+
+function updateCurrentSongHighlight(index) {
+  // remove the current song classname
+  const titleElements = document.querySelectorAll(".track-title");
+  titleElements.forEach((element) => {
+    console.log(element);
+    element.classList.remove("current-song");
+  });
+
+  // add current song class name
+  const currentSongtitleElement = document.querySelector(
+    `.item-container[data-index="${index}"] .track-title`
+  );
+
+  if (currentSongtitleElement) {
+    currentSongtitleElement.classList.add("current-song");
+  }
+}
+
+// to play a track using audio
+function loadSong(index) {
+  const currentSong = songs[index];
+  audio.src = currentSong.src;
+  thumbnail.src = currentSong.thumbnail;
+  trackTitle.innerText = currentSong.title;
+  trackDescription.innerText = currentSong.artist;
+  leftTime.textContent = "00:00";
+  audio.addEventListener("loadeddata", () => {
+    progress.max = audio.duration;
+  });
+  updateCurrentSongHighlight(index)
+}
 
 function renderSongList() {
   // clear our exisiting list
@@ -85,6 +135,14 @@ function renderSongList() {
     trackYear.classList.add("track-year");
 
     // add content and structure the list
+    itemContainer.addEventListener("click", () => {
+      currentSongIndex = index;
+      loadSong(currentSongIndex);
+      audio.play();
+      updatePlayPauseButton(true);
+    });
+
+    // add content and structure the list
 
     imgElement.src = "./assets/icons/outline.svg";
     trackTitle.textContent = song.title;
@@ -104,7 +162,12 @@ function renderSongList() {
     itemContainer.appendChild(trackDurationContainer);
 
     songlist.appendChild(itemContainer);
+
+    updateCurrentSongHighlight(currentSongIndex);
   });
 }
 
 renderSongList();
+
+// attached eventlistener to DOM elements
+playpauseBtn.addEventListener("click", playPause);
