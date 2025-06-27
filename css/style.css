@@ -59,6 +59,50 @@ input[type="range"] {
 }
 
 /* class added by js */
+.item-container{
+    display: flex;
+    align-items: center;
+    column-gap: 6px;
+    padding: 6px;
+}
+
+.item-tag{
+    flex-grow: 0;
+}
+
+.track-year{
+    color: var(--Gray-3);
+    font-family: "Poppins";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.track-data-container{
+    flex-grow: 1;
+}
+
+.track-title{
+    color: var(--Gray-1);
+    font-family: "Poppins";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 110.5%;
+}
+
+.track-artist{
+    color: var(--Gray-2);
+    font-family: "Poppins";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 110.5%;
+}
+
+.current-song{
+    color: var(--pinkish);
+}
 /* class ended by js */
 
 /* right hand side of the container */
